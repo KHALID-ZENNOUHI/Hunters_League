@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1730297960000-1
+      author: Youcode
+      changes:
+        - createIndex:
+            indexName: idx_username
+            tableName: user
+            columns:
+              - column:
+                  name: username
+
