@@ -1,4 +1,4 @@
-package org.springboot.hunters_league.domain;
+package org.springboot.hunters_league.domain.Enum;
 
 import lombok.Getter;
 
