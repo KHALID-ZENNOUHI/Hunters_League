@@ -8,8 +8,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.Setter;
-import org.springboot.hunters_league.domain.Difficulty;
-import org.springboot.hunters_league.domain.SpeciesType;
+import org.springboot.hunters_league.domain.Enum.Difficulty;
+import org.springboot.hunters_league.domain.Enum.SpeciesType;
 
 @Getter
 @Setter

@@ -2,12 +2,17 @@ package org.springboot.hunters_league.web.api;
 
 import jakarta.validation.Valid;
 import org.springboot.hunters_league.domain.Species;
+import org.springboot.hunters_league.domain.Enum.SpeciesType;
 import org.springboot.hunters_league.service.SpeciesService;
 import org.springboot.hunters_league.web.vm.mapper.SpeciesMapper;
 import org.springboot.hunters_league.web.vm.requestVM.SpeciesSaveVM;
 import org.springboot.hunters_league.web.vm.requestVM.SpeciesUpdateVM;
+import org.springboot.hunters_league.web.vm.responseVM.SpeciesVM;
+import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -36,8 +41,21 @@ public class SpeciesController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable UUID id) {
+    public ResponseEntity<String> delete(@PathVariable UUID id) {
         speciesService.delete(id);
+        return ResponseEntity.ok("Species deleted successfully.");
+    }
+
+
+    @GetMapping
+    public ResponseEntity<Page<SpeciesVM>> filterByType(
+            @RequestParam(name = "page", required = false, defaultValue = "0") int page,
+            @RequestParam(name = "size", required = false, defaultValue = "100") int size,
+            @RequestParam(name = "category", required = false) Optional<SpeciesType> category) {
+        Page<SpeciesVM> speciesVMPage = speciesService
+                .search(page, size, category)
+                .map(speciesMapper::speciesToSpeciesVM);
+        return ResponseEntity.ok(speciesVMPage);
     }
 
 

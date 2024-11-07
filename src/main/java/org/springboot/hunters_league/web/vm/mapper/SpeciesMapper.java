@@ -5,6 +5,7 @@ import org.mapstruct.factory.Mappers;
 import org.springboot.hunters_league.domain.Species;
 import org.springboot.hunters_league.web.vm.requestVM.SpeciesSaveVM;
 import org.springboot.hunters_league.web.vm.requestVM.SpeciesUpdateVM;
+import org.springboot.hunters_league.web.vm.responseVM.SpeciesVM;
 
 @Mapper(componentModel = "spring")
 public interface SpeciesMapper {
@@ -17,6 +18,10 @@ public interface SpeciesMapper {
     Species speciesUpdateVMToSpecies(SpeciesUpdateVM speciesUpdateVM);
 
     SpeciesUpdateVM speciesToSpeciesUpdateVM(Species species);
+
+    SpeciesVM speciesToSpeciesVM(Species species);
+
+    Species speciesVMToSpecies(SpeciesVM speciesVM);
 
 
 }

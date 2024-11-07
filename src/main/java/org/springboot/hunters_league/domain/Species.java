@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.*;
+import org.springboot.hunters_league.domain.Enum.Difficulty;
+import org.springboot.hunters_league.domain.Enum.SpeciesType;
 
 import java.util.UUID;
 
