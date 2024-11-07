@@ -12,9 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -30,7 +28,7 @@ public class UserController {
     public ResponseEntity<ProfileVM> register(@Valid @RequestBody RegisterVM registerVM) {
         User user = userMapper.registerToUser(registerVM);
         User savedUser = userService.save(user);
-        ProfileVM profileVM = userMapper.userToProfile(savedUser);
+        ProfileVM profileVM = userMapper.userToProfileVM(savedUser);
         return ResponseEntity.ok(profileVM);
     }
 
@@ -38,7 +36,7 @@ public class UserController {
     public ResponseEntity<ProfileVM> login(@Valid @RequestBody LoginVM loginVM) {
         User loginToUser = userMapper.loginToUser(loginVM);
         User user = userService.login(loginToUser);
-        ProfileVM profileVM = userMapper.userToProfile(user);
+        ProfileVM profileVM = userMapper.userToProfileVM(user);
         return ResponseEntity.ok(profileVM);
     }
 
@@ -62,9 +60,12 @@ public class UserController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<ProfileVM>> search(@RequestParam(name = "keyword") String keyword) {
-        List<User> user = userService.search(keyword);
-        List<ProfileVM> profileVM = user.stream().map(userMapper::userToProfile).toList();
-        return ResponseEntity.ok(profileVM);
+    public ResponseEntity<Page<User>> searchUsers(
+            @RequestParam(required = false) String username,
+            @RequestParam(required = false) String email,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Page<User> users = userService.search(username, email, page, size);
+        return ResponseEntity.ok(users);
     }
 }

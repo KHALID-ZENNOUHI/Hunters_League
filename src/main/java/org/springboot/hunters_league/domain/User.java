@@ -2,6 +2,7 @@ package org.springboot.hunters_league.domain;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
+import org.springboot.hunters_league.domain.Enum.Role;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -50,7 +51,7 @@ public class User {
     @Future(message = "License expiration date must be in the future.")
     private LocalDateTime licenseExpirationDate;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Participation> participations;
 
 }

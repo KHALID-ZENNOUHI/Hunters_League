@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.springboot.hunters_league.domain.Role;
+import org.springboot.hunters_league.domain.Enum.Role;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

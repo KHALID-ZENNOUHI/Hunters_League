@@ -1,8 +1,6 @@
 package org.springboot.hunters_league.service;
 
-import jakarta.transaction.Transactional;
-import org.springboot.hunters_league.domain.Participation;
-import org.springboot.hunters_league.domain.Role;
+import org.springboot.hunters_league.domain.Enum.Role;
 import org.springboot.hunters_league.domain.User;
 import org.springboot.hunters_league.repository.UserRepository;
 import org.springboot.hunters_league.util.PasswordHash;
@@ -15,19 +13,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public class UserService {
     private final UserRepository userRepository;
-    private final ParticipationService participationService;
 
     @Autowired
-    public UserService(UserRepository userRepository, ParticipationService participationService) {
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.participationService = participationService;
     }
 
     public User save(User user) {
@@ -58,11 +52,13 @@ public class UserService {
     }
 
     public User update(User user) {
+        findById(user.getId());
         return userRepository.save(user);
     }
 
     public void delete(UUID id) {
-            userRepository.deleteUserWithDependencies(id);
+        findById(id);
+        userRepository.deleteUserWithDependencies(id);
     }
 
     public Page<User> findAll(int page, int size) {
@@ -70,11 +66,9 @@ public class UserService {
         return userRepository.findAll(pageable);
     }
 
-    public List<User> findByUsernameIgnoreCaseOrEmailIgnoreCase(String keyword) {
-        return userRepository.findByUsernameIgnoreCaseOrEmailIgnoreCase(keyword, keyword);
-    }
 
-    public List<User> search(String keyword) {
-        return findByUsernameIgnoreCaseOrEmailIgnoreCase(keyword);
+    public Page<User> search(String username, String email, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return userRepository.search(username, email, pageable);
     }
 }

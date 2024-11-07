@@ -16,9 +16,9 @@ public interface UserMapper {
 
     User loginToUser(LoginVM loginVM);
 
-    ProfileVM userToProfile(User user);
+    ProfileVM userToProfileVM(User user);
 
-    User profileToUser(ProfileVM profileVM);
+    User profileVMToUser(ProfileVM profileVM);
 
     RegisterVM userToRegister(User user);
 
