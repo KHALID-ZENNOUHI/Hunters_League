@@ -49,5 +49,35 @@ public class GlobalExceptionHandler {
     public String handleInvalidEmailOrPasswordException(InvalidUsernameOrPasswordException e) {
         return e.getMessage();
     }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(CompetitionNotFoundException.class)
+    public String handleCompetitionNotFoundException(CompetitionNotFoundException e) {
+        return e.getMessage();
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ExistCompetitionInTheSameWeekException.class)
+    public String handleExistCompetitionInTheSameWeekException(ExistCompetitionInTheSameWeekException e) {
+        return e.getMessage();
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(InvalidParticipantsRangeException.class)
+    public String handleInvalidParticipantsRangeException(InvalidParticipantsRangeException e) {
+        return e.getMessage();
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(UserLicenseExpiredException.class)
+    public String handleUserLicenseExpiredException(UserLicenseExpiredException e) {
+        return e.getMessage();
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(CompetitionRegistrationClosedException.class)
+    public String handleCompetitionRegistrationClosedException(CompetitionRegistrationClosedException e) {
+        return e.getMessage();
+    }
 }
 
