@@ -33,5 +33,4 @@ public class Participation{
     @NotNull(message = "Score cannot be null.")
     @PositiveOrZero(message = "Score must be zero or a positive value.")
     private Double score;
-
 }
