@@ -31,4 +31,7 @@ public interface UserRepository extends JpaRepository<User, UUID>, JpaSpecificat
 
     @Procedure(name = "DeleteUserWithDependencies")
     void deleteUserWithDependencies(@Param("id") UUID id);
+
+    @Procedure(name = "DeleteUser")
+    void deleteUser(@Param("id") UUID id);
 }

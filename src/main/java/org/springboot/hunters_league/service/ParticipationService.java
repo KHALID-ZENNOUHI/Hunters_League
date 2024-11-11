@@ -111,4 +111,8 @@ public class ParticipationService {
         userService.findById(userId);
         return participationRepository.findParticipationHistory(userId);
     }
+
+    public void delete(UUID id) {
+        participationRepository.deleteParticipationWithHunts(id);
+    }
 }

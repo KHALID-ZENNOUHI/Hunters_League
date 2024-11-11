@@ -58,7 +58,7 @@ public class UserService {
 
     public void delete(UUID id) {
         findById(id);
-        userRepository.deleteUserWithDependencies(id);
+        userRepository.deleteUser(id);
     }
 
     public Page<User> findAll(int page, int size) {
