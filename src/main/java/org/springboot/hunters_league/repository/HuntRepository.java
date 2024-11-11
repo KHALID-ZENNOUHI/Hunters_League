@@ -12,6 +12,5 @@ import java.util.UUID;
 
 @Repository
 public interface HuntRepository extends JpaRepository<Hunt, UUID> {
-//    Page<Hunt> findAll(Page pageable);
     List<Hunt> findHuntByParticipation(Participation participation);
 }

@@ -20,4 +20,6 @@ public class ParticipationVM {
     private ProfileVM user;
 
     private CompetitionVM competition;
+
+    private Double score;
 }
