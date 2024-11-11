@@ -79,5 +79,23 @@ public class GlobalExceptionHandler {
     public String handleCompetitionRegistrationClosedException(CompetitionRegistrationClosedException e) {
         return e.getMessage();
     }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(WeightNotApprovedException.class)
+    public String handleWeightNotApprovedException(WeightNotApprovedException e) {
+        return e.getMessage();
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ParticipationNotFoundException.class)
+    public String handleParticipationNotFoundException(ParticipationNotFoundException e) {
+        return e.getMessage();
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(NoSearchCriteriaException.class)
+    public String handleNoSearchCriteriaException(NoSearchCriteriaException e) {
+        return e.getMessage();
+    }
 }
 

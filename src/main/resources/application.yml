@@ -27,3 +27,7 @@ spring:
 
 competition:
   scheduleStartTime: "0 0 0 * * MON"
+
+pagination:
+  defaultPageSize: 50
+  defaultPage: 0
