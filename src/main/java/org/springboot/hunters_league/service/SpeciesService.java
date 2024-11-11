@@ -3,6 +3,7 @@ package org.springboot.hunters_league.service;
 import org.springboot.hunters_league.domain.Species;
 import org.springboot.hunters_league.domain.Enum.SpeciesType;
 import org.springboot.hunters_league.repository.SpeciesRepositroy;
+import org.springboot.hunters_league.web.error.SpeciesNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -34,11 +35,10 @@ public class SpeciesService {
     }
 
     public Species findById(UUID id) {
-        return speciesRepository.findById(id).orElse(null);
+        return speciesRepository.findById(id).orElseThrow(SpeciesNotFoundException::new);
     }
 
-
-    public Page<Species> search(int page, int size, Optional<SpeciesType> category) {
+    public Page<Species> filterByType(int page, int size, Optional<SpeciesType> category) {
         Pageable pageable = PageRequest.of(page, size);
 
 

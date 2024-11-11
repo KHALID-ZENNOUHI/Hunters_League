@@ -49,12 +49,12 @@ public class SpeciesController {
 
     @GetMapping
     public ResponseEntity<Page<SpeciesVM>> filterByType(
-            @RequestParam(name = "page", required = false, defaultValue = "0") int page,
-            @RequestParam(name = "size", required = false, defaultValue = "100") int size,
+            @RequestParam(name = "page", required = false, defaultValue = "${pagination.defaultPage}") int page,
+            @RequestParam(name = "size", required = false, defaultValue = "${pagination.defaultPageSize}") int size,
             @RequestParam(name = "category", required = false) Optional<SpeciesType> category) {
-        Page<SpeciesVM> speciesVMPage = speciesService
-                .search(page, size, category)
-                .map(speciesMapper::speciesToSpeciesVM);
+        Page<Species> species = speciesService
+                .filterByType(page, size, category);
+        Page<SpeciesVM> speciesVMPage = species.map(speciesMapper::speciesToSpeciesVM);
         return ResponseEntity.ok(speciesVMPage);
     }
 

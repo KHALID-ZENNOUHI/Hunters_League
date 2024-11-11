@@ -55,7 +55,7 @@ public class UserController {
     }
 
     @GetMapping("/all")
-    public Page<User> findAll(@RequestParam(name = "page", required = false, defaultValue = "0") int page, @RequestParam(name = "size", required = false, defaultValue = "100") int size) {
+    public Page<User> findAll(@RequestParam(name = "page", required = false, defaultValue = "${pagination.defaultPage}") int page, @RequestParam(name = "size", required = false, defaultValue = "${pagination.defaultPageSize}") int size) {
         return userService.findAll(page, size);
     }
 
