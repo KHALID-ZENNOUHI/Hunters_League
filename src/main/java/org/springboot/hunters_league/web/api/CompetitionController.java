@@ -47,9 +47,16 @@ public class CompetitionController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<CompetitionVM>> findAll(@RequestParam(name = "page", required = false, defaultValue = "0") int page, @RequestParam(name = "size", required = false, defaultValue = "100") int size) {
+    public ResponseEntity<Page<CompetitionVM>> findAll(@RequestParam(name = "page", required = false, defaultValue = "${pagination.defaultPage}") int page, @RequestParam(name = "size", required = false, defaultValue = "${pagination.defaultPageSize}") int size) {
         Page<Competition> competitions = competitionService.findAll(page, size);
         Page<CompetitionVM> competitionVMs = competitions.map(competitionMapper::competitionToCompetitionVM);
         return ResponseEntity.ok(competitionVMs);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CompetitionVM> competitionDetails(@PathVariable UUID id) {
+        Competition competition = competitionService.findById(id);
+        CompetitionVM competitionVM = competitionMapper.competitionToCompetitionVM(competition);
+        return ResponseEntity.ok(competitionVM);
     }
 }
