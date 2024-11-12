@@ -1,6 +1,7 @@
 package org.springboot.hunters_league.service;
 
 import lombok.Setter;
+import org.springboot.hunters_league.repository.dto.CompetitionDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springboot.hunters_league.domain.Competition;
 import org.springboot.hunters_league.repository.CompetitionRepository;
@@ -10,6 +11,7 @@ import org.springboot.hunters_league.web.error.InvalidParticipantsRangeException
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -56,8 +58,12 @@ public class CompetitionService {
         return competitionRepository.findById(id).orElseThrow(CompetitionNotFoundException::new);
     }
 
+    public CompetitionDTO competitionDetails(UUID id) {
+        return competitionRepository.competitionDetails(id);
+    }
+
     public Page<Competition> findAll(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page, size, Sort.by("date").descending());
         return competitionRepository.findAll(pageable);
     }
 

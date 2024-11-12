@@ -2,6 +2,7 @@ package org.springboot.hunters_league.web.api;
 
 import jakarta.validation.Valid;
 import org.springboot.hunters_league.domain.Competition;
+import org.springboot.hunters_league.repository.dto.CompetitionDTO;
 import org.springboot.hunters_league.service.CompetitionService;
 import org.springboot.hunters_league.web.vm.mapper.CompetitionMapper;
 import org.springboot.hunters_league.web.vm.requestVM.CompetitionSaveVM;
@@ -54,9 +55,8 @@ public class CompetitionController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CompetitionVM> competitionDetails(@PathVariable UUID id) {
-        Competition competition = competitionService.findById(id);
-        CompetitionVM competitionVM = competitionMapper.competitionToCompetitionVM(competition);
-        return ResponseEntity.ok(competitionVM);
+    public ResponseEntity<CompetitionDTO> competitionDetails(@PathVariable UUID id) {
+        CompetitionDTO competition = competitionService.competitionDetails(id);
+        return ResponseEntity.ok(competition);
     }
 }

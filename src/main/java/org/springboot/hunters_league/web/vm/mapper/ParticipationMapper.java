@@ -10,13 +10,11 @@ import org.springboot.hunters_league.web.vm.mapper.CompetitionMapper;
 @Mapper(componentModel = "spring", uses = {UserMapper.class, CompetitionMapper.class})
 public interface ParticipationMapper {
 
-    // Map Participation entity to ParticipationVM
-    @Mapping(source = "user", target = "user")  // Uses the UserMapper
-    @Mapping(source = "competition", target = "competition")  // Uses the CompetitionMapper
+    @Mapping(source = "user", target = "user")
+    @Mapping(source = "competition", target = "competition")
     ParticipationVM participationToParticipationVM(Participation participation);
 
-    // Map ParticipationVM to Participation entity
-    @Mapping(source = "user", target = "user")  // Uses the UserMapper
-    @Mapping(source = "competition", target = "competition")  // Uses the CompetitionMapper
+    @Mapping(source = "user", target = "user")
+    @Mapping(source = "competition", target = "competition")
     Participation participationVMToParticipation(ParticipationVM participationVM);
 }

@@ -2,6 +2,7 @@ package org.springboot.hunters_league.repository;
 
 import org.springboot.hunters_league.domain.Competition;
 
+import org.springboot.hunters_league.repository.dto.CompetitionDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,5 +25,10 @@ public interface CompetitionRepository extends JpaRepository<Competition, UUID> 
 
     @Query("SELECT c FROM Competition c WHERE c.date >= :startOfWeek AND c.date < :endOfWeek")
     Optional<Competition> findCompetitionForCurrentWeek(LocalDateTime startOfWeek, LocalDateTime endOfWeek);
+
+    @Query("SELECT new org.springboot.hunters_league.repository.dto.CompetitionDTO(" +
+            "c.id, c.location, c.date, SIZE(c.participations)) " +
+            "FROM Competition c WHERE c.id = :id")
+    CompetitionDTO competitionDetails(UUID id);
 
 }
