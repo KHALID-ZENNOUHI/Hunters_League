@@ -4,7 +4,6 @@ import jakarta.validation.Valid;
 import org.springboot.hunters_league.domain.User;
 import org.springboot.hunters_league.service.UserService;
 import org.springboot.hunters_league.web.vm.mapper.UserMapper;
-import org.springboot.hunters_league.web.vm.requestVM.LoginVM;
 import org.springboot.hunters_league.web.vm.requestVM.RegisterVM;
 import org.springboot.hunters_league.web.vm.requestVM.UserVM;
 import org.springboot.hunters_league.web.vm.responseVM.ProfileVM;
@@ -24,19 +23,11 @@ public class UserController {
         this.userMapper = userMapper;
     }
 
-    @PostMapping("/register")
+    @PostMapping("/save")
     public ResponseEntity<ProfileVM> register(@Valid @RequestBody RegisterVM registerVM) {
         User user = userMapper.registerToUser(registerVM);
         User savedUser = userService.save(user);
         ProfileVM profileVM = userMapper.userToProfileVM(savedUser);
-        return ResponseEntity.ok(profileVM);
-    }
-
-    @PostMapping("/login")
-    public ResponseEntity<ProfileVM> login(@Valid @RequestBody LoginVM loginVM) {
-        User loginToUser = userMapper.loginToUser(loginVM);
-        User user = userService.login(loginToUser);
-        ProfileVM profileVM = userMapper.userToProfileVM(user);
         return ResponseEntity.ok(profileVM);
     }
 
@@ -63,8 +54,8 @@ public class UserController {
     public ResponseEntity<Page<User>> searchUsers(
             @RequestParam(required = false) String username,
             @RequestParam(required = false) String email,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
+            @RequestParam(defaultValue = "${pagination.defaultPage}") int page,
+            @RequestParam(defaultValue = "${pagination.defaultPageSize}") int size) {
         Page<User> users = userService.search(username, email, page, size);
         return ResponseEntity.ok(users);
     }

@@ -1,16 +1,15 @@
 package org.springboot.hunters_league.service;
 
 import jakarta.persistence.criteria.Predicate;
+import org.springboot.hunters_league.domain.User;
 import org.springboot.hunters_league.domain.Competition;
 import org.springboot.hunters_league.domain.Participation;
-import org.springboot.hunters_league.domain.User;
 import org.springboot.hunters_league.repository.ParticipationRepository;
 import org.springboot.hunters_league.service.dto.ParticipationDTO;
 import org.springboot.hunters_league.web.error.CompetitionRegistrationClosedException;
 import org.springboot.hunters_league.web.error.NoSearchCriteriaException;
 import org.springboot.hunters_league.web.error.ParticipationNotFoundException;
 import org.springboot.hunters_league.web.error.UserLicenseExpiredException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,7 +19,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 

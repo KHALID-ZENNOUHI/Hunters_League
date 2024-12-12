@@ -11,6 +11,8 @@ public class RegisterVM {
     @NotBlank(message = "Username cannot be blank.")
     private String username;
 
+    private String role;
+
     @Size(min = 8, message = "The password must be at least 8 characters long.")
     @Pattern(regexp = ".*[A-Z].*", message = "The password must contain at least one uppercase letter.")
     @Pattern(regexp = ".*[a-z].*", message = "The password must contain at least one lowercase letter.")

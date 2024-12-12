@@ -10,6 +10,7 @@ import org.springboot.hunters_league.web.vm.requestVM.CompetitionUpdateVM;
 import org.springboot.hunters_league.web.vm.responseVM.CompetitionVM;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -26,6 +27,7 @@ public class CompetitionController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<CompetitionVM> create(@Valid @RequestBody CompetitionSaveVM competitionSaveVM) {
         Competition competition = competitionMapper.competitionSaveVMToCompetition(competitionSaveVM);
         Competition savedCompetition = competitionService.save(competition);
@@ -48,6 +50,7 @@ public class CompetitionController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('MEMBER')")
     public ResponseEntity<Page<CompetitionVM>> findAll(@RequestParam(name = "page", required = false, defaultValue = "${pagination.defaultPage}") int page, @RequestParam(name = "size", required = false, defaultValue = "${pagination.defaultPageSize}") int size) {
         Page<Competition> competitions = competitionService.findAll(page, size);
         Page<CompetitionVM> competitionVMs = competitions.map(competitionMapper::competitionToCompetitionVM);
@@ -55,6 +58,7 @@ public class CompetitionController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('MEMBER')")
     public ResponseEntity<CompetitionDTO> competitionDetails(@PathVariable UUID id) {
         CompetitionDTO competition = competitionService.competitionDetails(id);
         return ResponseEntity.ok(competition);

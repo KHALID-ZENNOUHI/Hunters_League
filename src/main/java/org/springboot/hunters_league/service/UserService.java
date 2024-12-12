@@ -1,44 +1,53 @@
 package org.springboot.hunters_league.service;
 
-import org.springboot.hunters_league.domain.Enum.Role;
+import lombok.RequiredArgsConstructor;
 import org.springboot.hunters_league.domain.User;
+import org.springboot.hunters_league.domain.Enum.Role;
 import org.springboot.hunters_league.repository.UserRepository;
+import org.springboot.hunters_league.util.JwtUtil;
 import org.springboot.hunters_league.util.PasswordHash;
 import org.springboot.hunters_league.web.error.InvalidUsernameOrPasswordException;
 import org.springboot.hunters_league.web.error.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-
-    @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtService;
+    private final MyUserDetailService userDetailsService;
 
     public User save(User user) {
-        user.setRole(Role.MEMBER);
         user.setJoinDate(java.time.LocalDateTime.now());
         user.setLicenseExpirationDate(java.time.LocalDateTime.now().plusYears(2));
-        String password = PasswordHash.hashPassword(user.getPassword());
-        user.setPassword(password);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
+    }
+
+    public String verify(User user) {
+        final UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
+        final String jwt = jwtService.generateToken(userDetails);
+        return jwt;
     }
 
     public User findById(UUID id) {
         return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
-    }
-
-    public User findByUsername(String username) {
-        return userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
     }
 
     public User findByEmail(String email) {
