@@ -27,3 +27,6 @@ competition:
 pagination:
   defaultPageSize: 50
   defaultPage: 0
+
+server:
+  port: 8081
